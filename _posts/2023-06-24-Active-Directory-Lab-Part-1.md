@@ -1,6 +1,6 @@
 ---
 title: Creating an Active Directory Home Lab (Part 1)
-date: 2022-05-23 12:00:00 -500
+date: 2023-06-24 12:00:00 -500
 categories: [Hacking, RedTeam]
 tags: [redTeam,pentesting,hacking,windows,activedirectory] # TAG names should always be lowercase
 image:
@@ -50,7 +50,9 @@ Click on `Create a new virtual machine`,   Then, choose the Costume (Advanced) o
 ![Desktop View](1.2-option.png){: width="500" height="300"}
 
 We choose to ignore selecting the server image file iso to save our time from skipping some steps.
+
 ![Desktop View](2-install-operating-system-later.png){: width="500" height="300"}
+
 Here we choose our Guest Operating system as windows Server 2019.
 
 ![Desktop View](3-choose-windows.png){: width="500" height="300"}
