@@ -12,7 +12,7 @@ img_path: /assets/img/images/Part-2/
 
 ## Configure Active Directory Domain Services
 
-In this post, we will configure the Active Directory services on the windows server we set up in [Part 1](https://wailbld.github.io/posts/Active-Directory-Lab-Part-1/) of this series and learn how to quickly automate the process of creating 100 domain users with created PowerShell Script, representing a small business organization plus we add our windows 10 workstation to our network.
+In this post, we will configure the Active Directory services on the windows server we set up in [Part 1](https://wailbld.github.io/posts/Active-Directory-Lab-Part-1/) of this series and learn how to quickly automate the process of creating 100 domain users with a PowerShell Script, Create multiple active directory attack vectors, then add windows 10 workstation to our domain.
 
 
 ## Active Directory Setup
@@ -80,26 +80,73 @@ After the machine restarts, we can go to the server dashboard and check the newl
 
 Now we have installed Active Directory, take a snapshot of the current state before adding domain users.
 
-## Adding Domain Users
+## Configure Vulnerable Active Directory
+Now we need to configure our vulnerable Active Directory, which allows us to test most of active directory attacks in our local lab. To automate the process, we can import this PowerShell script.
+
+You can download this script from [Here](https://github.com/Wailbld/Vulnerable-AD).
 
 ![Desktop View](18-configure-domain.png){: width="500" height="300"}
-![Desktop View](19-add-users.png){: width="500" height="300"}
+
+We import  `Vulnadplus.ps1` powershell script to domain controller.
+
+![Desktop View](19-0-add-users.png){: width="500" height="300"}
+
+The powershell script have many functions that create many `OU` such as users, groups, machines...etc.
+
+![Desktop View](19-1-add-users.png){: width="500" height="300"}
+
+Before execute the powershell script change the `-DomainName` to our domain name `attacklab.local`
+
 ![Desktop View](20-add-users.png){: width="500" height="300"}
+
+After we execute the script use see the new created text file under the name `generate.txt` , This file contains all `OU` Created.
+
 ![Desktop View](21-add-users.png){: width="500" height="300"}
-![Desktop View](22-0-add-users.png){: width="500" height="300"}
+
+Now from server manager go to `Tools>Active Directory Users and Computers` Than choose a user which have a description like this `Company default password(Reset ASAP)` than click on `password change`, As we gonna need this low privilege user as starting point in our vulnerable lab.
+
 ![Desktop View](22-1-add-users.png){: width="500" height="300"}
 ![Desktop View](22-2-add-users.png){: width="500" height="300"}
+
+Add a new password for the chosen user and uncheck `User must change password at next logon`.
+
 ![Desktop View](22-3-add-users.png){: width="500" height="300"}
 
 
-## Adding Windows 10 Workstation
+## Joining Windows 10 Workstation To ATTACKLAB.LOCAL
+
+To add windows 10 to the domain we need to configure network adapter of windows 10.
 
 ![Desktop View](23-add-workstation.png){: width="500" height="300"}
+
+We assigned  Windows 10 an IP address of `172.16.0.5` and a subnet mask address of `255.255.255.0`. Also, for the DNS, we assign it to the domain controller's IP address, which is `172.16.0.2`.
+
 ![Desktop View](24-add-workstation.png){: width="500" height="300"}
+
+In `Search Bar` search for `About` than click on `Rename This PC`
+
 ![Desktop View](25-add-workstation.png){: width="500" height="300"}
+
+In our case, we named it `WSNT01`. We need to restart our Windows 10 machine so the changes can take effect.
+
 ![Desktop View](26-add-workstation.png){: width="500" height="300"}
+
+After restarting the `WSTN01` machine, go to `About>Advanced` than click on `change`.
+select Domain than add `ATTACKLAB.local` , than click on ok.
+
 ![Desktop View](27-add-workstation.png){: width="500" height="300"}
+
+A new Login window pops up and demands that we enter domain user credentials for joining `WSTN01` to `ATTACKLAB.local`, For that, we use the credentials for the user whose password we changed, then click OK.
+
 ![Desktop View](28-add-workstation.png){: width="500" height="300"}
+
+We can verify that `WSTN01` is added to domain by checking The Computers `OU`.
+
 ![Desktop View](29-add-workstation.png){: width="500" height="300"}
+
+Going back to `WSTN01` After restarting, we can login to the machine using the domain user that we added before using this logon format: `domain\user`
+
 ![Desktop View](30-add-workstation.png){: width="500" height="300"}
+
+As we approach the­ conclusion of this blog post, we hope that you have found it both informative and engaging. We deeply appreciate the time and attention you have­ dedicated to joining us on this enlightening journey. However, our adventure does not halt here! Stay tuned for the next blog post that show how we gonna exploit the multiple Active directory vector attacks that allow us to take over the domain controller. 
 

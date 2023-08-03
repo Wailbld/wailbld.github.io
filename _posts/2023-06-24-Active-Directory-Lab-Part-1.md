@@ -12,7 +12,7 @@ img_path: /assets/img/images/Part-1/
 
 
 ## Description
-This project is a walkthrough of how I created an Active Directory home lab Environment using VMWare. I set up a Microsoft Server to run Active Directory on it. I then configure a Domain Controller that will allow me to run a domain. After that I ran a Powershell script to create over 100 users in Active Directory and proceed to log into those newly created accounts on another client that uses the domain I set up to connect to the internet. This lab simulates a business environment. In this lab I'll need a Microsoft Server 2019 ISO, A Windows 10 Enterprise ISO, VMWare and a Powershell script.
+This blog post series is a walkthrough of how I created an Active Directory home lab Environment using VMWare. I set up a Microsoft Server to run Active Directory on it. I then configure a Domain Controller that will allow me to run a domain. After that, I ran a PowerShell script to configure our vulnerable Active Directory, This lab simulates a business environment. In this lab, I’ll need a Microsoft Server 2019 ISO, A Windows 10 Enterprise ISO, VMWare and Kali Linux to serve as an attacker machine.
 
 
 ## Environments Used
@@ -114,6 +114,7 @@ Go to `Ethernet0 > Properties`.
 check `Internet Protocol Version 4(TCP/IPv4` than click on Properties.
 
 ![Desktop View](16-change-ipv4.png){: width="500" height="300"}
+
 since we dont need internet for our lab, I decided to have the Host only network in the 172.16.0.0/24 range. Therefore, I assigned the server an IP address of 172.16.0.2 and a subnet mask address of “255.255.255.0”.
 Also for the DNS, we assign it the DC address, which is a loopback of 127.0.0.1 so it pings itself.
 
